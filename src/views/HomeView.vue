@@ -4,6 +4,9 @@ import IconSearch from "@/components/icons/IconSearch.vue";
 import IconSpeaker from "@/components/icons/IconSpeaker.vue";
 import IconDocument from "@/components/icons/IconDocument.vue";
 import { ref, computed, watchEffect, onMounted, watch } from "vue";
+import { useClipboard } from "@vueuse/core";
+
+const { copy, copied } = useClipboard();
 
 const searchText = ref("");
 const searchResult = ref([]);
@@ -170,10 +173,16 @@ watch(
               <span class="text-sm font-semibold text-orange-300">Play</span>
             </button>
             <button
+            @click="copy(searchResult[0]?.word)"
               class="cursor-pointer bg-orange-100 text-center p-2 rounded w-14 h-14 hover:bg-orange-200 transition-all"
             >
               <IconDocument class="text-orange-400 w-6 mx-auto" />
-              <span class="text-sm font-semibold text-orange-300">Copy</span>
+              <span class="text-sm font-semibold text-orange-300" v-if="!copied"
+                >Copy</span
+              >
+              <span class="text-sm font-semibold text-orange-300" v-else
+                >Copied</span
+              >
             </button>
           </div>
         </div>
