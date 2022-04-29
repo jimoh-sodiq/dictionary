@@ -146,6 +146,12 @@ watch(
         </p>
       </div>
 
+      <div v-else-if="userHasSearched === true && searchResult?.title">
+        <h2 class="text-center font-bold text-gray-600 text-xl">
+          {{ searchResult?.title }}
+        </h2>
+      </div>
+
       <div v-else-if="searchResult && userHasSearched === true">
         <!-- Word and play starts here -->
         <div class="mb-8">
@@ -176,21 +182,23 @@ watch(
         <!-- See more starts here -->
         <div class="space-y-3 mb-6">
           <p class="text-sm text-gray-500">
-            See the licence for {{ searchResult[0].word }}
+            See the licence for {{ searchResult[0]?.word }}
             <a
               target="_blank"
-              :href="searchResult[0].license.url"
+              :href="searchResult[0]?.license.url"
               class="text-orange-400"
               >here</a
             >
           </p>
           <p class="text-gray-500 text-sm">
             learn more about
-            <span class="text-black font-bold">{{ searchResult[0].word }}</span>
+            <span class="text-black font-bold">{{
+              searchResult[0]?.word
+            }}</span>
             on
             <a
               target="_blank"
-              :href="searchResult[0].sourceUrls"
+              :href="searchResult[0]?.sourceUrls"
               class="text-orange-400"
               >Wikitionary</a
             >
@@ -236,6 +244,19 @@ watch(
           Just type in the word in the search input and click on the search icon
         </h2>
       </div>
+
+      <div
+        v-else-if="userHasSearched === true && searchResult?.title"
+        class="flex flex-col items-center justify-center w-full h-full text-center text-xl md:text-2xl text-orange-500 font-semibold font-mono"
+      >
+        <h2>
+          {{ searchResult?.message }}
+        </h2>
+        <h2>
+          {{ searchResult?.resolution }}
+        </h2>
+      </div>
+
       <div v-else>
         <div class="mb-6">
           <div id="definitions">
