@@ -17,6 +17,7 @@ const toggleSuggestion = ref(false);
 onMounted(() => {
   generateAndDisplayMeaning();
 });
+
 async function generateAndDisplayMeaning() {
   const randomWord = await (
     await fetch("https://random-words-api.vercel.app/word")
@@ -199,24 +200,21 @@ watch(
 
         <!-- buttons section starts here -->
         <div class="flex space-x-2 mb-8">
-          <a
-            href="#"
+          <div
             class="text-sm px-4 py-2 rounded-full w-fit text-white bg-orange-300 cursor-pointer hover:bg-orange-400"
           >
             Definitions
-          </a>
-          <a
-            
+          </div>
+          <div
             class="text-sm px-4 py-2 rounded-full w-fit text-white bg-orange-300 cursor-pointer hover:bg-orange-400"
           >
             Examples
-          </a>
-          <a
-            
+          </div>
+          <div
             class="text-sm px-4 py-2 rounded-full w-fit text-white bg-orange-300 cursor-pointer hover:bg-orange-400"
           >
             Synonyms
-          </a>
+          </div>
         </div>
         <!-- buttons section ends here -->
       </div>
@@ -252,11 +250,11 @@ watch(
               <!-- {{ item }} -->
               <div
                 class="p-4"
-                v-for="(unique, index) in item.meanings"
+                v-for="(unique, index) in item?.meanings"
                 :key="index"
               >
                 <h2 class="font-semibold text-gray-800 text-xl uppercase">
-                  {{ unique.partOfSpeech }}
+                  {{ unique?.partOfSpeech }}
                 </h2>
                 <ul
                   v-for="(definition, index) in unique.definitions"
@@ -264,11 +262,11 @@ watch(
                   class="list-disc text-sm list-inside text-gray-600"
                 >
                   <li class="mb-2">
-                    {{ definition.definition }}
+                    {{ definition?.definition }}
                     <br />
                     <p class="text-xs pl-6" v-if="definition.example">
                       <span class="font-bold text-gray-800">Example:</span>
-                      {{ definition.example }}
+                      {{ definition?.example }}
                     </p>
                     <br />
                     <p
@@ -277,18 +275,18 @@ watch(
                     >
                       <span class="font-bold text-gray-800">Synonyms:</span>
                       <span
-                        v-for="(syn, index) in definiton.synonyms"
+                        v-for="(syn, index) in definiton?.synonyms"
                         :key="index"
                         >{{ syn }},</span
                       >
                     </p>
                     <p
                       class="text-xs pl-6"
-                      v-if="definition.antonyms.length > 0"
+                      v-if="definition.antonyms?.length > 0"
                     >
                       <span class="font-bold text-gray-800">Antonyms:</span>
                       <span
-                        v-for="(ant, index) in definiton.antonyms"
+                        v-for="(ant, index) in definiton?.antonyms"
                         :key="index"
                         >{{ ant }},</span
                       >
@@ -297,62 +295,9 @@ watch(
                 </ul>
               </div>
             </div>
-            <!-- <div class="bg-white md:h-[250px rounded p-4">
-              <h2 class="font-semibold text-gray-600 mb-3">Verb</h2>
-              <ul class="list-disc text-sm list-inside text-gray-500 space-y-2">
-                <li>
-                  The break in the working week, usually two days including the
-                  traditional holy or sabbath day. Thus in western countries,
-                  Saturday and Sunday.
-                </li>
-              </ul>
-            </div> -->
           </div>
         </div>
-        <!-- definitions ends here -->
-
-        <!-- Examples start here
-        <div class="mb-6">
-          <div>
-            <h1 class="text-lg font-mono text-gray-600 font-semibold mb-4">
-              Examples & Synonyms
-            </h1>
-            <div class="w-full h-[1px] bg-gray-300 mb-2"></div>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
-            <div class="bg-white md:h-[250px] rounded p-4" id="examples">
-              <h2 class="font-semibold text-gray-600 mb-3">Examples</h2>
-              <ul class="list-disc text-sm list-inside text-gray-500 space-y-3">
-                <li>
-                  The break in the working week, usually two days including the
-                  traditional holy or sabbath day. Thus in western countries,
-                  Saturday and Sunday.
-                  <span
-                    class="bg-orange-400 cursor-pointer text-orange-100 text-xs px-4 hover:bg-orange-300 transition-all py-1 rounded-full"
-                    >Copy</span
-                  >
-                </li>
-                <li>
-                  The break in the working week, usually two days including the
-                  traditional holy or sabbath day. Thus in western countries,
-                  Saturday and Sunday.
-                </li>
-              </ul>
-            </div>
-            <div class="bg-white md:h-[250px rounded p-4" id="synonyms">
-              <h2 class="font-semibold text-gray-600 mb-3">Synonyms</h2>
-              <ul class="list-disc text-sm list-inside text-gray-500 space-y-2">
-                <li>
-                  The break in the working week, usually two days including the
-                  traditional holy or sabbath day. Thus in western countries,
-                  Saturday and Sunday.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div> -->
       </div>
-      <!-- examples ends here -->
     </section>
   </div>
 </template>
